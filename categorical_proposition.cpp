@@ -1,13 +1,17 @@
 #include "categorical_proposition.h"
 #include <stdexcept>
-#include <iostream>
+#include <sstream>
 
 std::istream& operator>>(std::istream& is, categorical_proposition& proposition) {
-	is >> proposition.pronoun;
+	str line;
+	std::getline(is, line);
+	auto ss = std::stringstream(line);
+
+	ss >> proposition.pronoun;
 
 	//determining the subject
 	str aux;
-	while (is >> aux && aux != "are") {
+	while (ss >> aux && aux != "are") {
 		proposition.subject += aux;
 		proposition.subject += " ";
 	}
@@ -15,11 +19,11 @@ std::istream& operator>>(std::istream& is, categorical_proposition& proposition)
 
 	//determining the verb
 	proposition.verb = aux;
-	is >> aux;
+	ss >> aux;
 	if (aux == "not") {
 		proposition.verb += " ";
 		proposition.verb += aux;
-		is >> aux;
+		ss >> aux;
 	}
 
 	//determining the predicate
@@ -27,16 +31,8 @@ std::istream& operator>>(std::istream& is, categorical_proposition& proposition)
 		proposition.predicate += aux;
 		proposition.predicate += " ";
 	}
-	while (aux.back() != '.' && is >> aux);
+	while (ss >> aux);
 	proposition.predicate.pop_back();
-	proposition.predicate.pop_back();
-
-	/*
-	std::cout << "pronoun: " << proposition.pronoun << '\n';
-	std::cout << "subject: " << proposition.subject << '\n';
-	std::cout << "verb: " << proposition.verb << '\n';
-	std::cout << "predicate: " << proposition.predicate << '\n';
-	*/
 
 	proposition.determine_type();
 
