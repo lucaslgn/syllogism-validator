@@ -8,8 +8,8 @@ std::istream& operator>>(std::istream& is, categorical_proposition& proposition)
 	auto ss = std::stringstream(line);
 
 	ss >> proposition.pronoun;
-	if (proposition.pronoun[0] < 97)
-		proposition.pronoun[0] += 32;
+	if (proposition.pronoun[0] >= 97)
+		proposition.pronoun[0] -= 32;
 
 	//determining the subject
 	str aux;
