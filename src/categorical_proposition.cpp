@@ -8,6 +8,8 @@ std::istream& operator>>(std::istream& is, categorical_proposition& proposition)
 	auto ss = std::stringstream(line);
 
 	ss >> proposition.pronoun;
+	if (proposition.pronoun[0] < 97)
+		proposition.pronoun[0] += 32;
 
 	//determining the subject
 	str aux;
@@ -33,6 +35,9 @@ std::istream& operator>>(std::istream& is, categorical_proposition& proposition)
 	}
 	while (ss >> aux);
 	proposition.predicate.pop_back();
+
+	if (proposition.predicate.back() == '.' || proposition.predicate.back() == ',')
+		proposition.predicate.pop_back();
 
 	proposition.determine_type();
 

@@ -1,4 +1,4 @@
 all:
-	g++ -std=c++17 -Wall -Wextra -pedantic categorical_proposition.cpp syllogism.cpp main.cpp -o exe
+	g++ -std=c++17 -Wall -Wextra -pedantic src/categorical_proposition.cpp src/syllogism.cpp src/main.cpp -o exe
 run:
 	./exe

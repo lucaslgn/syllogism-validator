@@ -9,9 +9,9 @@ public:
 	friend class syllogism;
 	void clear();
 private:
-	str pronoun; //possibilities: all; some
+	str pronoun; //possibilities: all; no
 	str subject;
-	str verb; //possibilities: are; are not
+	str verb; //possibilities: are; aren't
 	str predicate;
 
 	void determine_type();
