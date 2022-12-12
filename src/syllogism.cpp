@@ -8,7 +8,7 @@ std::istream& operator>>(std::istream& is, syllogism& syllogism) {
 	is >> syllogism.premise2;
 	is >> syllogism.conclusion;
 
-	syllogism.determine_terms();
+	syllogism.determine_terms();	
 
 	return is;
 }
@@ -22,7 +22,7 @@ bool syllogism::is_valid() const {
 		diagram(premise1, venn_premises);
 	}
 	arr_venn venn_conclusion = venn_premises;
-	diagram(conclusion, venn_conclusion);
+	diagram(conclusion, venn_conclusion);	
 	for (int i = 0; i < 7; ++i)
 		if (venn_conclusion[i] != venn_premises[i])
 			return false;
@@ -66,12 +66,12 @@ void syllogism::treat_case_sp(const char& type, arr_venn& venn) const {
 		venn[1] = state::shaded;
 		venn[4] = state::shaded;
 	} else if (type == 'I') { //Some S are P
-		if (venn[1] == state::unknown)
+		if (venn[1] == state::unknown && venn[4] != state::x)
 			venn[1] = state::x;
-		if (venn[4] == state::unknown)
+		if (venn[4] == state::unknown && venn[1] != state::x)
 			venn[4] = state::x;
 	} else if (type == 'O') { //Some S are not P
-		if (venn[0] == state::unknown)
+		if (venn[0] == state::unknown && venn[3] != state::x)
 			venn[0] = state::x;
 		if (venn[3] == state::unknown)
 			venn[3] = state::x;
@@ -82,7 +82,7 @@ void syllogism::treat_case_sm(const char& type, arr_venn& venn) const {
 		venn[0] = state::shaded;
 		venn[1] = state::shaded;
 	} else if (type == 'E') { //All S are not M
-		venn[3] = state::shaded;
+		venn[3] = state::shaded;	
 		venn[4] = state::shaded;
 	} else if (type == 'I') { //Some S are M
 		if (venn[3] == state::unknown)
@@ -104,14 +104,14 @@ void syllogism::treat_case_ps(const char& type, arr_venn& venn) const {
 		venn[1] = state::shaded;
 		venn[4] = state::shaded;
 	} else if (type == 'I') { //Some P are S
-		if (venn[1] == state::unknown)
+		if (venn[1] == state::unknown && venn[4] != state::x)
 			venn[1] = state::x;
-		if (venn[4] == state::unknown)
+		if (venn[4] == state::unknown && venn[1] != state::x)
 			venn[4] = state::x;
 	} else if (type == 'O') { //Some P are not S
-		if (venn[2] == state::unknown)
+		if (venn[2] == state::unknown && venn[5] != state::x)
 			venn[2] = state::x;
-		if (venn[5] == state::unknown)
+		if (venn[5] == state::unknown && venn[2] != state::x)
 			venn[5] = state::x;
 	}
 
@@ -138,7 +138,7 @@ void syllogism::treat_case_pm(const char& type, arr_venn& venn) const {
 void syllogism::treat_case_ms(const char& type, arr_venn& venn) const {
 	if (type == 'A') { //All M are S
 		venn[5] = state::shaded;
-		venn[6] = state::shaded;
+		venn[6] = state::shaded; 
 	} else if (type == 'E') { //All M are not S
 		venn[3] = state::shaded;
 		venn[4] = state::shaded;
